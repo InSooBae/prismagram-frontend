@@ -1,5 +1,5 @@
-const BOX_BORDER = '1px solid #e6e6e6';
-const BORDER_RADIUS = '4px';
+const BOX_BORDER = 'border:1px solid #e6e6e6';
+const BORDER_RADIUS = 'border-radius:4px';
 
 export default {
   bgColor: '#FAFAFA',

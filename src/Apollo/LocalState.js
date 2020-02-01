@@ -1,7 +1,10 @@
-/* 이번 localState로는 Authenticate이 되는지 안되는지만  */
+/* 이번 localState로는 Authenticate이 되는지 안되는지만 
+  clientState은 이 앱이 오프라인 상태에서 발생
+*/
 
 export const defaults = {
-  isLoggedIn: localStorage.getItem('token') !== null ? true : false
+  /* Boolean(null) -> false Boolean("~~") -> true */
+  isLoggedIn: Boolean(localStorage.getItem('token')) || false
 };
 
 export const resolvers = {
