@@ -22,7 +22,7 @@ const AppRouter = ({ isLoggedIn }) => (
   </Router>
 );
 
-Router.propTypes = {
+AppRouter.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired
 };
 
