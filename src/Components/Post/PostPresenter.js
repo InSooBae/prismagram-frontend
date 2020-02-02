@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import TextareaAutosize from 'react-autosize-textarea';
 import FatText from '../FatText';
 import Avatar from '../Avatar';
 import { HeartFull, HeartEmpty, Comment } from '../Icons';
@@ -7,7 +8,7 @@ import { HeartFull, HeartEmpty, Comment } from '../Icons';
 const Post = styled.div`
   ${props => props.theme.whiteBox};
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   margin-bottom: 25px;
 `;
 
@@ -27,10 +28,26 @@ const Location = styled.span`
   font-size: 12px;
 `;
 
-const Files = styled.div``;
+const Files = styled.div`
+  position: relative;
+  padding-bottom: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-shrink: 0;
+`;
 
-const File = styled.img`
+const File = styled.div`
   max-width: 100%;
+  width: 100%;
+  height: 600px;
+  position: absolute;
+  top: 0;
+  background-image: url(${props => props.src});
+  background-size: cover;
+  background-position: center;
+  opacity: ${props => (props.showing ? 1 : 0)};
+  transition: opacity 0.5s linear;
 `;
 
 const Button = styled.span`
@@ -61,24 +78,41 @@ const Timestamp = styled.span`
   border-bottom: ${props => props.theme.lightGreyColor} 1px solid;
 `;
 
+//이건 이 package(react-autosize-textarea) 만든사람이 className을 전달할수 있게 해주면 동작함 (TextareaAutosize)괄호 안에 있는 component가 className이라는 이름의prop을 갖고있을때 가능
+//만약 괄호안에 있는 component가 prop called className을 갖고있으면 원하는대로 추가가능
+const Textarea = styled(TextareaAutosize)`
+  border: none;
+  width: 100%;
+  resize: none;
+  font-size: 14px;
+  &:focus {
+    outline: none;
+  }
+`;
+
 export default ({
-  user: { username, avatar },
+  user: { userName, avatar },
   location,
   files,
   isLiked,
   likeCount,
-  createdAt
+  createdAt,
+  newComment,
+  currentItem
 }) => (
   <Post>
     <Header>
       <Avatar size="sm" url={avatar} />
       <UserColumn>
-        <FatText text={username} />
+        <FatText text={userName} />
         <Location>{location}</Location>
       </UserColumn>
     </Header>
     <Files>
-      {files && files.map(file => <File id={file.id} src={file.url} />)}
+      {files &&
+        files.map((file, index) => (
+          <File id={file.id} src={file.url} showing={index === currentItem} />
+        ))}
     </Files>
     <Meta>
       <Buttons>
@@ -89,6 +123,7 @@ export default ({
       </Buttons>
       <FatText text={likeCount === 1 ? '1 like' : `${likeCount} likes`} />
       <Timestamp>{createdAt}</Timestamp>
+      <Textarea placeholder={'Add a Comment...'} {...newComment} />
     </Meta>
   </Post>
 );
