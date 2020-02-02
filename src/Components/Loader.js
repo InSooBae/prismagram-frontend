@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Logo } from './Icons';
 
+//로딩 애니메이션
 const Animation = keyframes`
   0%{
     opacity:0

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PostPresenter from './PostPresenter';
 import useInput from '../../Hooks/useInput';
+import { TOGGLE_LIKE, ADD_COMMENT } from './PostQueries';
+import { useMutation } from '@apollo/react-hooks';
+import { toast } from 'react-toastify';
 
 const PostContainer = ({
   id,
@@ -18,7 +21,18 @@ const PostContainer = ({
   const [isLikeds, setIsLiked] = useState(isLiked);
   const [likeCounts, setLikeCount] = useState(likeCount);
   const [currentItem, setCurrentItem] = useState(0);
+  const [selfComments, setSelfComments] = useState([]);
   const comment = useInput('');
+  //Header에서 이미 실행됐던 코드라 API로 한번 보내서 더이상 가지않음
+  const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
+    variables: { postId: id }
+  });
+  const [addCommentMutation, { loading: mutationLoading }] = useMutation(
+    ADD_COMMENT,
+    {
+      variables: { postId: id, text: comment.value }
+    }
+  );
 
   useEffect(() => {
     const totalFiles = files.length;
@@ -28,6 +42,48 @@ const PostContainer = ({
       setTimeout(() => setCurrentItem(currentItem + 1), 3000);
     }
   }, [currentItem, files]);
+
+  const toggleLike = async () => {
+    toggleLikeMutation();
+    if (isLikeds === true) {
+      setIsLiked(false);
+      setLikeCount(likeCounts - 1);
+    } else {
+      setIsLiked(true);
+      setLikeCount(likeCounts + 1);
+    }
+  };
+
+  //Mutation 기다리고 UI에 응답
+  // const toggleLike = async () => {
+  //   try {
+  //     await toggleLikeMutation();
+  //     if (isLikeds === true) {
+  //       setIsLiked(false);
+  //     } else {
+  //       setIsLiked(true);
+  //     }
+  //   } catch {
+  //     toast.errror("Can't register Like!");
+  //   }
+  // };
+
+  const onKeyPress = async event => {
+    const { which } = event;
+
+    if (which === 13) {
+      event.preventDefault();
+      try {
+        const {
+          data: { addComment }
+        } = await addCommentMutation();
+        setSelfComments([...selfComments, addComment]);
+        comment.setValue('');
+      } catch {
+        toast.error("Can't Send Comment!");
+      }
+    }
+  };
 
   return (
     <PostPresenter
@@ -43,6 +99,10 @@ const PostContainer = ({
       setIsLiked={setIsLiked}
       setLikeCount={setLikeCount}
       currentItem={currentItem}
+      toggleLike={toggleLike}
+      onKeyPress={onKeyPress}
+      selfComments={selfComments}
+      mutationLoading={mutationLoading}
     />
   );
 };

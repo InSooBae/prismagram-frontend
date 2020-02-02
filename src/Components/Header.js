@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
-import { gql } from 'apollo-boost';
 import Input from './Input';
 import useInput from '../Hooks/useInput';
 import { Compass, HeartEmpty, User, Logo } from './Icons';
 import { useQuery } from '@apollo/react-hooks';
+import { ME } from '../SharedQueries';
 
 //withRouter는 컴포넌트에다 다른 라우터의 능력들을 주는것
 
@@ -65,13 +65,6 @@ const HeaderLink = styled(Link)`
   }
 `;
 //Query me
-const ME = gql`
-  {
-    me {
-      userName
-    }
-  }
-`;
 
 //router에 접근하고 싶은데 가지고 있지않은데(router안에 없다던가) withRouter가 있으면 router가 할수 있는 모든것들을 Access해줌
 //props엔 history(이 객체를 통해 push, replace 를 통해 다른 경로로 이동하거나 앞 뒤 페이지로 전환 할 수 있습니다),
@@ -95,7 +88,11 @@ export default withRouter(({ history }) => {
         </HeaderColumn>
         <HeaderColumn>
           <form onSubmit={onSearchSubmit}>
-            <SearchInput {...search} placeholder="Search" />
+            <SearchInput
+              value={search.value}
+              onChange={search.onChange}
+              placeholder="Search"
+            />
           </form>
         </HeaderColumn>
         <HeaderColumn>
