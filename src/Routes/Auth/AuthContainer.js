@@ -1,6 +1,6 @@
 //Auth에 관련된 모든 state랑 query,data 같은것들을 Container에다가 둠
 import React, { useState } from 'react';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { toast } from 'react-toastify';
 import {
   LOG_IN,
