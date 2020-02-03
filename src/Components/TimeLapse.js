@@ -6,7 +6,7 @@ const TimeIapse = ({ createAt }) => {
   const sec = 60;
   const mins = 60;
   const hours = 24;
-  const days = 7;
+  const days = 31;
   const month = 12;
   let msg = '';
 

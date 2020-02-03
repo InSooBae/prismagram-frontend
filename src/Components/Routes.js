@@ -6,12 +6,14 @@ import Auth from '../Routes/Auth';
 import Expolore from '../Routes/Explore';
 import Profile from '../Routes/Profile';
 import Search from '../Routes/Search';
+import Notifications from '../Routes/Notifications';
 
 const LoggedInRoutes = () => (
   <Switch>
     <Route exact path="/" component={Feed} />
     <Route path="/explore" component={Expolore} />
     <Route path="/search" component={Search} />
+    <Route path="/notifications" component={Notifications} />
     {/* Profile이 Explore 보다 위에 있으면 Explore는 영원히 나올수가 없다.(:username가 먼저 나와버림) */}
     <Route path="/:userName" component={Profile} />
     <Redirect from="*" to="/" />

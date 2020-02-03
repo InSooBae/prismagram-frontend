@@ -9,7 +9,7 @@ import SquarePost from '../../Components/SquarePost';
 import Button from '../../Components/Button';
 
 const Wrapper = styled.div`
-  min-height: 100vh;
+  min-height: 70vh;
 `;
 
 const Header = styled.header`

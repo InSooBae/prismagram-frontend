@@ -20,7 +20,6 @@ const EAvatar = styled(Avatar)`
 
 const ELink = styled(Link)`
   color: inherit;
-  margin-bottom: 10px;
 `;
 
 const UserCard = ({ id, userName, isFollowing, url, isSelf }) => (

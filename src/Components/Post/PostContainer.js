@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import PostPresenter from './PostPresenter';
-import useInput from '../../Hooks/useInput';
-import { TOGGLE_LIKE, ADD_COMMENT } from './PostQueries';
 import { useMutation } from '@apollo/react-hooks';
 import { toast } from 'react-toastify';
+import { TOGGLE_LIKE, ADD_COMMENT } from './PostQueries';
+import PostPresenter from './PostPresenter';
+import useInput from '../../Hooks/useInput';
 
 const PostContainer = ({
   id,
