@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import TextareaAutosize from 'react-autosize-textarea';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import TimeLapse from '../TimeLapse';
 import FatText from '../FatText';
 import Avatar from '../Avatar';
 import { HeartFull, HeartEmpty, Comment as CommentIcon } from '../Icons';
 import Loader from '../Loader';
-import { Link } from 'react-router-dom';
 
 const Post = styled.div`
   ${props => props.theme.whiteBox};
@@ -94,7 +96,9 @@ const Textarea = styled(TextareaAutosize)`
 `;
 
 const Comments = styled.ul`
+  word-wrap: break-word;
   margin-top: 10px;
+  line-height: 17px;
 `;
 
 const Comment = styled.li`
@@ -106,6 +110,14 @@ const Comment = styled.li`
 
 const Wrapper = styled.div`
   position: relative;
+`;
+
+const TimeForm = styled.div`
+  display: inline-block;
+  font-weight: 400;
+  opacity: 0.5;
+  font-size: 12px;
+  padding-left: 5px;
 `;
 
 //이건 이 package(react-autosize-textarea) 만든사람이 className을 전달할수 있게 해주면 동작함 (TextareaAutosize)괄호 안에 있는 component가 className이라는 이름의prop을 갖고있을때 가능
@@ -160,6 +172,9 @@ export default ({
                 <FatText text={comment.user.userName} />
               </Link>
               {comment.text}
+              <TimeForm>
+                <TimeLapse createAt={comment.createdAt} />
+              </TimeForm>
             </Comment>
           ))}
           {selfComments.map(comment => (
@@ -168,11 +183,14 @@ export default ({
                 <FatText text={comment.user.userName} />
               </Link>
               {comment.text}
+              <TimeForm>
+                <TimeLapse createAt={moment().format('YYYY-MM-DDTHH:mm:ssZ')} />
+              </TimeForm>
             </Comment>
           ))}
         </Comments>
       )}
-      <Timestamp>{createdAt}</Timestamp>
+      <Timestamp>{moment(createdAt).format('YYYY.MM.DD HH:MM')}</Timestamp>
       <Textarea
         placeholder={'Add a Comment...'}
         value={newComment.value}

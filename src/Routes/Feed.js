@@ -30,6 +30,7 @@ const FEED_QUERY = gql`
           id
           userName
         }
+        createdAt
       }
       createdAt
     }
