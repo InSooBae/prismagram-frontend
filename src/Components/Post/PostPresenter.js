@@ -5,6 +5,7 @@ import FatText from '../FatText';
 import Avatar from '../Avatar';
 import { HeartFull, HeartEmpty, Comment as CommentIcon } from '../Icons';
 import Loader from '../Loader';
+import { Link } from 'react-router-dom';
 
 const Post = styled.div`
   ${props => props.theme.whiteBox};
@@ -12,6 +13,9 @@ const Post = styled.div`
   max-width: 600px;
   margin-bottom: 25px;
   user-select: none;
+  a {
+    color: inherit;
+  }
 `;
 
 const Header = styled.header`
@@ -126,7 +130,9 @@ export default ({
     <Header>
       <Avatar size="sm" url={avatar} />
       <UserColumn>
-        <FatText text={userName} />
+        <Link to={`/${userName}`}>
+          <FatText text={userName} />
+        </Link>
         <Location>{location}</Location>
       </UserColumn>
     </Header>
@@ -150,13 +156,17 @@ export default ({
         <Comments>
           {comments.map(comment => (
             <Comment key={comment.id}>
-              <FatText text={comment.user.userName} />
+              <Link to={`/${comment.user.userName}`}>
+                <FatText text={comment.user.userName} />
+              </Link>
               {comment.text}
             </Comment>
           ))}
           {selfComments.map(comment => (
             <Comment key={comment.id}>
-              <FatText text={comment.user.userName} />
+              <Link to={`/${comment.user.userName}`}>
+                <FatText text={comment.user.userName} />
+              </Link>
               {comment.text}
             </Comment>
           ))}

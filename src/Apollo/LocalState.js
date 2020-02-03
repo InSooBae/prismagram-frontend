@@ -18,13 +18,14 @@ export const resolvers = {
           isLoggedIn: true
         }
       });
+      window.location.reload();
       return null;
     },
     /* LogOut */
     logUserOut: (_, __, { cache }) => {
       localStorage.removeItem('token');
       /* 전체 페이지 reload */
-      window.location.reload();
+      window.location = '/';
       return null;
     }
   }

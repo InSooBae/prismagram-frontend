@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
+import { useQuery } from '@apollo/react-hooks';
+import { Compass, HeartEmpty, User, Logo } from './Icons';
 import Input from './Input';
 import useInput from '../Hooks/useInput';
-import { Compass, HeartEmpty, User, Logo } from './Icons';
-import { useQuery } from '@apollo/react-hooks';
 import { ME } from '../SharedQueries';
 
 //withRouter는 컴포넌트에다 다른 라우터의 능력들을 주는것

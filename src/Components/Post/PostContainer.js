@@ -35,18 +35,16 @@ const PostContainer = ({
     }
   );
 
-  const slide = () => {
-    const totalFiles = files.length;
-    if (currentItem === totalFiles - 1) {
-      setTimeout(() => setCurrentItem(0), 3000);
-    } else {
-      setTimeout(() => setCurrentItem(currentItem + 1), 3000);
-    }
-  };
-
   useEffect(() => {
-    slide();
-  });
+    const totalFiles = files.length;
+    let timer = null;
+    if (currentItem === totalFiles - 1) {
+      timer = setTimeout(() => setCurrentItem(0), 3000);
+    } else {
+      timer = setTimeout(() => setCurrentItem(currentItem + 1), 3000);
+    }
+    return () => clearTimeout(timer);
+  }, [currentItem, files]);
 
   const toggleLike = async () => {
     toggleLikeMutation();
