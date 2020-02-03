@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import Loader from '../../Components/Loader';
@@ -7,6 +8,7 @@ import FatText from '../../Components/FatText';
 import FollowButton from '../../Components/FollowButton';
 import SquarePost from '../../Components/SquarePost';
 import Button from '../../Components/Button';
+import { Edit } from '../../Components/Icons';
 
 const Wrapper = styled.div`
   min-height: 70vh;
@@ -61,6 +63,10 @@ const Posts = styled.div`
   grid-auto-rows: 200px;
 `;
 
+const ButtonLink = styled(Link)`
+  margin-right: 10px;
+`;
+
 export default ({ loading, data, logOut }) => {
   if (loading === true) {
     return (
@@ -97,7 +103,12 @@ export default ({ loading, data, logOut }) => {
             <UsernameRow>
               <Username>{userName}</Username>
               {isSelf ? (
-                <Button onClick={logOut} text="Log Out" />
+                <>
+                  <ButtonLink to={`/editProfile/${userName}`}>
+                    <Edit />
+                  </ButtonLink>
+                  <Button onClick={logOut} text="Log Out" />
+                </>
               ) : (
                 <FollowButton isFollowing={isFollowing} id={id} />
               )}
