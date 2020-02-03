@@ -56,12 +56,13 @@ export default () => {
         data.seeFeed &&
         data.seeFeed.map(post => (
           <Post
+            key={post.id}
             id={post.id}
+            location={post.location}
+            caption={post.caption}
             user={post.user}
             files={post.files}
             likeCount={post.likeCount}
-            location={post.location}
-            caption={post.caption}
             isLiked={post.isLiked}
             comments={post.comments}
             createdAt={post.createdAt}

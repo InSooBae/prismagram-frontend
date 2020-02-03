@@ -18,10 +18,11 @@ const PostContainer = ({
   location
 }) => {
   //1개씩 늘어나고 없어지는거라 state에 임시적으로 담고 리프레쉬되면 실제서버로 바뀌고 아님 서버를 통해서가아닌 시각적인 효과로 바로 추가 및 삭제
-  const [isLikeds, setIsLiked] = useState(isLiked);
-  const [likeCounts, setLikeCount] = useState(likeCount);
+  const [isLikedS, setIsLiked] = useState(isLiked);
+  const [likeCountS, setLikeCount] = useState(likeCount);
   const [currentItem, setCurrentItem] = useState(0);
   const [selfComments, setSelfComments] = useState([]);
+
   const comment = useInput('');
   //Header에서 이미 실행됐던 코드라 API로 한번 보내서 더이상 가지않음
   const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
@@ -34,23 +35,27 @@ const PostContainer = ({
     }
   );
 
-  useEffect(() => {
+  const slide = () => {
     const totalFiles = files.length;
     if (currentItem === totalFiles - 1) {
       setTimeout(() => setCurrentItem(0), 3000);
     } else {
       setTimeout(() => setCurrentItem(currentItem + 1), 3000);
     }
-  }, [currentItem, files]);
+  };
+
+  useEffect(() => {
+    slide();
+  });
 
   const toggleLike = async () => {
     toggleLikeMutation();
-    if (isLikeds === true) {
+    if (isLikedS === true) {
       setIsLiked(false);
-      setLikeCount(likeCounts - 1);
+      setLikeCount(likeCountS - 1);
     } else {
       setIsLiked(true);
-      setLikeCount(likeCounts + 1);
+      setLikeCount(likeCountS + 1);
     }
   };
 
@@ -89,10 +94,10 @@ const PostContainer = ({
     <PostPresenter
       user={user}
       files={files}
-      likeCount={likeCounts}
+      likeCount={likeCountS}
       location={location}
       caption={caption}
-      isLiked={isLikeds}
+      isLiked={isLikedS}
       comments={comments}
       createdAt={createdAt}
       newComment={comment}

@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+//유저 아이콘
+
 const getSize = size => {
   let number;
   if (size === 'sm') {
@@ -24,7 +26,9 @@ const Container = styled.div`
   border-radius:50%;
 `;
 
-const Avatar = ({ size = 'sm', url }) => <Container size={size} url={url} />;
+const Avatar = ({ size = 'sm', url, className }) => (
+  <Container className={className} size={size} url={url} />
+);
 
 Avatar.propTypes = {
   size: PropTypes.oneOf(['sm', 'md', 'lg']),

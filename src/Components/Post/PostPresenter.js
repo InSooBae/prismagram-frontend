@@ -100,6 +100,10 @@ const Comment = styled.li`
   }
 `;
 
+const Wrapper = styled.div`
+  position: relative;
+`;
+
 //이건 이 package(react-autosize-textarea) 만든사람이 className을 전달할수 있게 해주면 동작함 (TextareaAutosize)괄호 안에 있는 component가 className이라는 이름의prop을 갖고있을때 가능
 //만약 괄호안에 있는 component가 prop called className을 갖고있으면 원하는대로 추가가능
 
@@ -129,7 +133,7 @@ export default ({
     <Files>
       {files &&
         files.map((file, index) => (
-          <File id={file.id} src={file.url} showing={index === currentItem} />
+          <File key={file.id} src={file.url} showing={index === currentItem} />
         ))}
     </Files>
     <Meta>
@@ -156,7 +160,6 @@ export default ({
               {comment.text}
             </Comment>
           ))}
-          {mutationLoading && <Loader />}
         </Comments>
       )}
       <Timestamp>{createdAt}</Timestamp>
@@ -166,6 +169,7 @@ export default ({
         onChange={newComment.onChange}
         onKeyPress={onKeyPress}
       />
+      <Wrapper>{mutationLoading && <Loader />}</Wrapper>
     </Meta>
   </Post>
 );
