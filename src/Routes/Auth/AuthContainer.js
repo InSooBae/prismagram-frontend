@@ -50,7 +50,6 @@ export default () => {
           } = await requestSecretMutation();
           if (!requestSecret) {
             toast.error("You don't have an Account yet, Please create one");
-            setTimeout(() => setAction('signUp'), 3000);
           } else {
             toast.success('Check your inbox for Your Login Secret!');
             setAction('confirm');
